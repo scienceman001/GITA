@@ -46,6 +46,9 @@ public interface UniManagement {
      */
     public Lector createAssistance(int id, String firstName, String lastName);
 
+
+    public Lector createProfessor(int id,String firstName,String lastName,String lectorType);
+
     /**
      * Delete an professor asisstance with the passed ID, if such exists
      *

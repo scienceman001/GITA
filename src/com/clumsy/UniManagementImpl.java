@@ -74,6 +74,7 @@ public class UniManagementImpl implements UniManagement {
 
     @Override
     public Student createStudent(int id, String firstName, String lastName, String facNumber) {
+
         Student student = new Student(1, "Revazi", "Kobaidze");
         students[lastUsedStudentIndex] = student;
         lastUsedStudentIndex += lastUsedStudentIndex;
@@ -99,11 +100,18 @@ public class UniManagementImpl implements UniManagement {
 
     @Override
     public Lector createAssistance(int id, String firstName, String lastName) {
-        Lector assistant = new Lector(1, "Levan", "Lebanidze");
-
+        Lector assistant = new Lector(id, firstName, lastName);
         this.assistants[lastUsedAssistanceIndex] = assistant;
         lastUsedAssistanceIndex += lastUsedAssistanceIndex;
         return assistant;
+    }
+
+    @Override
+    public Lector createProfessor(int id, String firstName, String lastName, String lectorType) {
+        Lector professor = new Lector(id, firstName, lastName, lectorType);
+        this.docentsAndProfessors[lastUsedDocentsAndProfessorsIndex] = professor;
+        lastUsedDocentsAndProfessorsIndex += lastUsedDocentsAndProfessorsIndex;
+        return professor;
     }
 
     @Override
@@ -123,12 +131,55 @@ public class UniManagementImpl implements UniManagement {
         return true;
     }
 
+
+    /**
+     * Using test class
+     *
+     * @param student
+     * @param course
+     * @return
+     */
     @Override
     public boolean addStudentToCourse(Student student, Course course) {
         course.addStudent(student);
         student.addCourse(course);
         return true;
     }
+
+    /**
+     * Using command line
+     *
+     * @param studentId
+     * @param courseName
+     * @return
+     */
+    public boolean addStudentToCourse(int studentId, String courseName) {
+        Course foundCourse = null;
+        Student foundStudent = null;
+        for (Course course : this.courses) {
+            if (course != null && course.getName().equals(courseName)) {
+                foundCourse = course;
+            }
+        }
+        for (Student student : this.students) {
+            if (student != null && student.getId() == studentId) {
+                foundStudent = student;
+            }
+        }
+
+        if (foundStudent == null) {
+            System.out.println("can,t find student");
+            return false;
+        } else if (foundCourse == null) {
+            System.out.println("can,t find course");
+            return false;
+        } else {
+            foundCourse.addStudent(foundStudent);
+            foundStudent.addCourse(foundCourse);
+            return true;
+        }
+    }
+
 
     @Override
     public boolean addStudentsToCourse(Student[] students, Course course) {

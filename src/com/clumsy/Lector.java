@@ -6,7 +6,12 @@ public class Lector extends User {
         PROFESSOR,
         ASSISTANCE
     }
+
     Course courses[] = new Course[4];
+
+    public Lector(int id, String firstName, String lastName, String lectorType) {
+        super(id, firstName, lastName);
+    }
 
     public Lector(int id, String firstName, String lastName) {
         super(id, firstName, lastName);
