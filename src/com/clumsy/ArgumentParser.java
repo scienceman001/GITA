@@ -1,5 +1,7 @@
 package com.clumsy;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -16,7 +18,9 @@ public class ArgumentParser {
     Map commands = new HashMap();
 
     ArgumentParser() {
-        //maby latter ill make syntax like help -command name
+
+
+//        maby latter ill make syntax like help -command name
         commands.put("createStudent", "createStudent <user_id> <userFirstName> <userLastName> <facNumber>");
         commands.put("createCourse", "createCourse <courseName>");
         commands.put("assignStudentToCourse", "assignStudentToCourse <student_id> <courseName>");
@@ -47,9 +51,10 @@ public class ArgumentParser {
                     uniManagement.addStudentToCourse(Integer.parseInt(s[1]), s[2]);
                     break;
                 case ASSIGN_ASSISTANCE_TO_COURSE:
+                    uniManagement.addAssistanceToCourse(Integer.parseInt(s[1]), s[2]);
                     break;
                 case ASSIGN_PROFESSOR_TO_COURSE:
-//                    asighProfessorToCourse <lectort_id> <courseName>
+                    uniManagement.addProfessorToCourse(Integer.parseInt(s[1]), s[2]);
                     break;
                 case "help":
                     this.commands.values().forEach(v->{

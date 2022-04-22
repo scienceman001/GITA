@@ -62,7 +62,7 @@ public interface UniManagement {
      * @return <code>true</code> ONLY n case the assistance was succesfully assighed
      * to the course
      */
-    public boolean asighAssistanceToCourse(Lector assistance, Course course);
+    public boolean assignAssistanceToCourse(Lector assistance, Course course);
 
     /**
      * Aighn a professor to a course
@@ -70,7 +70,7 @@ public interface UniManagement {
      * @return <code>true</code> ONLY n case the professor was succesfully assighed
      * to the course
      */
-    public boolean asighProfessorToCourse(Lector professor, Course course);
+    public boolean assignProfessorToCourse(Lector professor, Course course);
 
     /**
      * Add a studnt to a course

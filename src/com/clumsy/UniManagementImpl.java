@@ -83,7 +83,6 @@ public class UniManagementImpl implements UniManagement {
 
     @Override
     public boolean deleteStudent(int id) {
-
         for (int i = 0; i < this.students.length; i++) {
             Student student = this.students[i];
             if (student != null && student.getId() == id) {
@@ -94,7 +93,6 @@ public class UniManagementImpl implements UniManagement {
                 break;
             }
         }
-
         return false;
     }
 
@@ -120,15 +118,34 @@ public class UniManagementImpl implements UniManagement {
     }
 
     @Override
-    public boolean asighAssistanceToCourse(Lector assistance, Course course) {
+    public boolean assignAssistanceToCourse(Lector assistance, Course course) {
         course.setAssistance(assistance);
         return true;
     }
 
+    public void addAssistanceToCourse(int assistanceId, String courseName) {
+        Lector foundAssitance = findAssistance(assistanceId);
+        Course foundCourse=findCourse(courseName);
+        assignAssistanceToCourse(foundAssitance,foundCourse);
+    }
+
     @Override
-    public boolean asighProfessorToCourse(Lector professor, Course course) {
+    public boolean assignProfessorToCourse(Lector professor, Course course) {
         course.setLector(professor);
         return true;
+    }
+
+    public void addProfessorToCourse(int professorId, String courseName) {
+        Lector foundProfessor = findProfessor(professorId);
+        Course foundCourse = findCourse(courseName);
+
+        if (foundProfessor == null) {
+            System.out.println("can,t find professor");
+        } else if (foundCourse == null) {
+            System.out.println("can,t find course");
+        } else {
+            assignProfessorToCourse(foundProfessor, foundCourse);
+        }
     }
 
 
@@ -154,19 +171,8 @@ public class UniManagementImpl implements UniManagement {
      * @return
      */
     public boolean addStudentToCourse(int studentId, String courseName) {
-        Course foundCourse = null;
-        Student foundStudent = null;
-        for (Course course : this.courses) {
-            if (course != null && course.getName().equals(courseName)) {
-                foundCourse = course;
-            }
-        }
-        for (Student student : this.students) {
-            if (student != null && student.getId() == studentId) {
-                foundStudent = student;
-            }
-        }
-
+        Course foundCourse = findCourse(courseName);
+        Student foundStudent = findStudent(studentId);
         if (foundStudent == null) {
             System.out.println("can,t find student");
             return false;
@@ -195,5 +201,45 @@ public class UniManagementImpl implements UniManagement {
     @Override
     public boolean removeStudentFromCourse(Student student, Course course) {
         return false;
+    }
+
+    //todo refactor in general code
+    Course findCourse(String courseName) {
+        Course foundCourse = null;
+        for (Course course : this.courses) {
+            if (course != null && course.getName().equals(courseName)) {
+                foundCourse = course;
+            }
+        }
+        return foundCourse;
+    }
+
+    Student findStudent(int studentId) {
+        Student foundStudent = null;
+        for (Student student : this.students) {
+            if (student != null && student.getId() == studentId) {
+                foundStudent = student;
+            }
+        }
+        return foundStudent;
+    }
+
+    Lector findProfessor(int lectorId) {
+        Lector foundProfessor = null;
+        for (Lector lector : this.docentsAndProfessors) {
+            if (lector != null && lector.getId() == lectorId) {
+                foundProfessor = lector;
+            }
+        }
+        return foundProfessor;
+    }
+    Lector findAssistance(int assistanceId){
+        Lector foundAssistance = null;
+        for (Lector assitent : this.assistants) {
+            if (assitent != null && assitent.getId() == assistanceId) {
+                foundAssistance = assitent;
+            }
+        }
+        return foundAssistance;
     }
 }
